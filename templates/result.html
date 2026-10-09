@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Result | BeanSense</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand"><span class="brand-icon">✳</span> BeanSense</a>
+    <nav><a href="/">Home</a><a href="/demo" class="nav-cta">Try another bean ↗</a></nav>
+</header>
+
+<main class="result-page">
+    <section class="result-card">
+        <span class="eyebrow">YOUR BEANSENSE RESULT</span>
+        <div class="result-symbol">✳</div>
+        <p class="result-kicker">Our model's prediction</p>
+        <h1>{{ prediction }}</h1>
+        <p class="result-description">
+            Your measurements most closely matched this variety
+            according to our trained K-Nearest Neighbors model.
+        </p>
+
+        <div class="vote-heading">
+            <h2>Neighbor vote breakdown</h2>
+            <p>Share of the model's neighbor votes</p>
+        </div>
+
+        {% for class_name, score in class_scores.items() %}
+        <div class="vote-row">
+            <div class="vote-label">
+                <span>{{ class_name }}</span>
+                <span>{{ score }}%</span>
+            </div>
+            <div class="vote-track">
+                <div
+                    class="vote-fill {% if class_name == prediction %}vote-selected{% endif %}"
+                    style="width: {{ score }}%"
+                ></div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <p class="result-disclaimer">
+            These percentages represent the neighbors' vote proportions,
+            not guaranteed probabilities or certainty. This is an
+            educational demonstration, not an agricultural certification.
+        </p>
+
+        <div class="result-actions">
+            <a href="/demo" class="button button-primary">Try another sample ↗</a>
+            <a href="/" class="text-link">Return home</a>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <a href="/" class="brand"><span class="brand-icon">✳</span> BeanSense</a>
+    <p>Making machine learning a little more human.</p>
+    <span>Built with curiosity & data.</span>
+</footer>
+
+</body>
+</html>

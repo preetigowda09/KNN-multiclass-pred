@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bean Analysis | BeanSense</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">
+        <span class="brand-icon">✳</span> BeanSense
+    </a>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/#science">How it works</a>
+        <a href="/demo" class="nav-cta">Try another sample ↗</a>
+    </nav>
+</header>
+
+<main class="demo-page">
+    <div class="demo-heading">
+        <span class="eyebrow">YOUR LITTLE EXPERIMENT</span>
+        <h1>Let's meet this <em>bean.</em></h1>
+        <p>
+            We've picked a real example from the dataset. Explore its
+            measurements, then ask our trained KNN model to identify it.
+        </p>
+    </div>
+
+    <section class="demo-card">
+        <div class="demo-card-heading">
+            <div>
+                <span class="eyebrow">SAMPLE MEASUREMENTS</span>
+                <h2>Inside the numbers</h2>
+            </div>
+            <span class="sample-badge">✳ Dataset example</span>
+        </div>
+
+        <div class="measurement-grid">
+            {% for feature, value in measurements.items() %}
+            <div class="measurement-item">
+                <label for="{{ feature }}">
+                    {{ feature.replace('Ration', ' Ratio') }}
+                </label>
+                <input
+                    id="{{ feature }}"
+                    type="number"
+                    name="{{ feature }}"
+                    form="prediction-form"
+                    value="{{ '%.8f'|format(value) }}"
+                    step="any"
+                    min="0"
+                    required
+                >
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="demo-tip">
+            <span>ⓘ</span>
+            <p>
+                These measurements are numerical features extracted from
+                bean images. For this first demo, you can inspect and edit
+                the sample values. You do not need to measure a bean by hand.
+            </p>
+        </div>
+
+        <form id="prediction-form" action="/predict" method="POST">
+            <button type="submit" class="button button-primary">
+                Identify this bean <span>↗</span>
+            </button>
+        </form>
+    </section>
+
+    <p class="demo-back"><a href="/">← Back to exploring BeanSense</a></p>
+</main>
+
+<footer class="footer">
+    <a href="/" class="brand"><span class="brand-icon">✳</span> BeanSense</a>
+    <p>Making machine learning a little more human.</p>
+    <span>Built with curiosity & data.</span>
+</footer>
+
+</body>
+</html>
